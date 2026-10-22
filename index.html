@@ -5,52 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Gym Log Master</title>
+    <title>Gym Master</title>
     <style>
-        :root {
-            --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #ffffff;
-            --text-secondary: #aaaaaa; --accent-color: #0a84ff; --border-color: #333333;
-            --input-bg: #2c2c2e; --danger-color: #ff453a;
-        }
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-color: #f2f2f7; --card-bg: #ffffff; --text-color: #000000;
-                --text-secondary: #666666; --accent-color: #007aff; --border-color: #e5e5ea;
-                --input-bg: #e9e9eb; --danger-color: #ff3b30;
-            }
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color); color: var(--text-color);
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
-            padding-top: calc(20px + env(safe-area-inset-top));
-        }
-        .container { width: 100%; max-width: 450px; }
-        h1 { font-size: 24px; margin-bottom: 15px; font-weight: 700; text-align: center; }
-        .card {
-            background-color: var(--card-bg); border-radius: 12px; padding: 16px;
-            margin-bottom: 16px; box-shadow: 0 4px 6px rgba(0,0,0,.05); border: 1px solid var(--border-color);
-        }
-        h2 { font-size: 18px; margin-top: 0; margin-bottom: 14px; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-        .form-group { display: flex; flex-direction: column; margin-bottom: 10px; }
-        label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
-        input, select { background-color: var(--input-bg); border: none; border-radius: 8px; padding: 10px; color: var(--text-color); font-size: 16px; -webkit-appearance: none; }
-        input:focus, select:focus { outline: 2px solid var(--accent-color); }
-        .btn-primary { background-color: var(--accent-color); color: #fff; border: none; border-radius: 8px; padding: 14px; font-size: 16px; font-weight: 600; width: 100%; margin-top: 10px; cursor: pointer; }
-        .btn-secondary { background-color: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 14px; width: 100%; margin-top: 8px; cursor: pointer; }
-        .log-entry { border-left: 3px solid var(--accent-color); padding-left: 10px; margin-bottom: 16px; font-size: 14px; position: relative; }
-        .log-entry span { color: var(--text-secondary); display: block; font-size: 11px; }
-        .delete-btn { position: absolute; right: 0; top: 0; background: none; border: none; color: var(--danger-color); font-size: 12px; cursor: pointer; }
-        .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
-        .tab { flex: 1; padding: 10px; text-align: center; background-color: var(--input-bg); border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
-        .tab.active { background-color: var(--accent-color); color: white; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        :root { --bg:#121212; --card:#1e1e1e; --text:#fff; --sec:#aaa; --act:#0a84ff; --brd:#333; --in:#2c2c2e; --del:#ff453a; --set:#30d158; }
+        @media(prefers-color-scheme:light){ :root { --bg:#f2f2f7; --card:#ffffff; --text:#000; --sec:#666; --act:#007aff; --brd:#e5e5ea; --in:#e9e9eb; --del:#ff3b30; } }
+        body { font-family:-apple-system,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:20px; display:flex; flex-direction:column; align-items:center; padding-top:calc(20px + env(safe-area-inset-top)); }
+        .con { width:100%; max-width:450px; }
+        h1 { font-size:24px; margin-bottom:15px; font-weight:700; text-align:center; }
+        .card { background:var(--card); border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid var(--brd); box-shadow:0 4px 6px rgba(0,0,0,.05); }
+        h2 { font-size:18px; margin:0 0 14px 0; color:var(--act); border-bottom:1px solid var(--brd); padding-bottom:6px; }
+        .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+        .form-group { display:flex; flex-direction:column; margin-bottom:10px; }
+        label { font-size:11px; font-weight:600; text-transform:uppercase; color:var(--sec); margin-bottom:4px; }
+        input, select, textarea { background:var(--in); border:none; border-radius:8px; padding:10px; color:var(--text); font-size:16px; -webkit-appearance:none; font-family:inherit; }
+        input:focus, select:focus, textarea:focus { outline:2px solid var(--act); }
+        textarea { resize:none; height:60px; }
+        .btn-primary { background:var(--act); color:#fff; border:none; border-radius:8px; padding:14px; font-size:16px; font-weight:600; width:100%; margin-top:10px; cursor:pointer; }
+        .btn-secondary { background:transparent; color:var(--sec); border:1px solid var(--brd); border-radius:8px; padding:10px; font-size:14px; width:100%; margin-top:8px; cursor:pointer; }
+        .tabs { display:flex; gap:8px; margin-bottom:15px; }
+        .tab { flex:1; padding:10px; text-align:center; background:var(--in); border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; }
+        .tab.active { background:var(--act); color:#white; }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        .set-row { display:grid; grid-template-columns: 40px 1fr 1fr 40px; gap:8px; align-items:center; margin-bottom:8px; }
+        .set-num { font-size:14px; font-weight:600; color:var(--sec); text-align:center; }
+        .btn-set-del { background:none; border:none; color:var(--del); font-size:18px; cursor:pointer; }
+        .log-entry { border-left:3px solid var(--act); padding-left:10px; margin-bottom:16px; font-size:14px; position:relative; }
+        .log-entry span { color:var(--sec); display:block; font-size:11px; }
+        .delete-btn { position:absolute; right:0; top:0; background:none; border:none; color:var(--del); font-size:12px; cursor:pointer; }
+        .comment-text { font-style:italic; color:var(--sec); font-size:13px; margin-top:4px; display:block; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="con">
         <h1>Gym Tracker Master</h1>
         
         <div class="card">
@@ -61,14 +48,25 @@
         </div>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('rowing-tab')">🚣 Rowing</div>
-            <div class="tab" onclick="switchTab('lifting-tab')">💪 Lifting</div>
+            <div class="tab active" onclick="switchTab(event, 'rowing-tab')">🚣 Rowing</div>
+            <div class="tab" onclick="switchTab(event, 'lifting-tab')">💪 Lifting</div>
         </div>
 
         <!-- ROWING FORM -->
         <div id="rowing-tab" class="tab-content active">
             <div class="card">
                 <h2>Rowing Session</h2>
+                <!-- Edit 1: Added Time & Meters Rows -->
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Time (MM:SS)</label>
+                        <input type="text" id="rowTime" placeholder="00:00" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label>Meters</label>
+                        <input type="number" inputmode="numeric" id="rowMeters" placeholder="0">
+                    </div>
+                </div>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Kcal</label>
@@ -119,11 +117,16 @@
                         <input type="number" inputmode="decimal" step="0.01" id="dlMax" placeholder="0.00">
                     </div>
                 </div>
+                <!-- Edit 3: Optional Comment Field -->
+                <div class="form-group">
+                    <label>Comments / Notes</label>
+                    <textarea id="rowNotes" placeholder="Optional notes..."></textarea>
+                </div>
                 <button type="button" class="btn-primary" onclick="saveRowing()">Save Rowing Session</button>
             </div>
         </div>
 
-        <!-- LIFTING FORM (WITH SMART DATALIST) -->
+        <!-- LIFTING FORM -->
         <div id="lifting-tab" class="tab-content">
             <div class="card">
                 <h2>Strength Training</h2>
@@ -139,65 +142,70 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Exercise Name (Type or Select)</label>
+                    <label>Exercise Name</label>
                     <input type="text" id="exerciseName" list="exerciseOptions" placeholder="e.g., Bench Press">
                     <datalist id="exerciseOptions">
-                        <!-- Preloaded standard options -->
-                        <option value="Bench Press"></option>
-                        <option value="Incline Dumbbell Press"></option>
-                        <option value="Squats"></option>
-                        <option value="Deadlifts"></option>
-                        <option value="Overhead Press"></option>
-                        <option value="Barbell Rows"></option>
-                        <option value="Lat Pulldown"></option>
-                        <option value="Bicep Curls"></option>
-                        <option value="Tricep Pushdowns"></option>
-                        <option value="Plank"></option>
+                        <option value="Bench Press"><option value="Incline Dumbbell Press"><option value="Squats"><option value="Deadlifts"><option value="Overhead Press"><option value="Barbell Rows"><option value="Lat Pulldown"><option value="Bicep Curls"><option value="Tricep Pushdowns"><option value="Plank">
                     </datalist>
                 </div>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Weight (lbs/kg)</label>
-                        <input type="number" inputmode="numeric" id="liftWeight" placeholder="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Reps</label>
-                        <input type="number" inputmode="numeric" id="liftReps" placeholder="0">
+                
+                <!-- Edit 2: Multi-Set Input System -->
+                <label style="margin-bottom: 8px; display:block;">Sets Config</label>
+                <div id="setsContainer">
+                    <div class="set-row">
+                        <div class="set-num">1</div>
+                        <input type="number" class="set-weight" inputmode="numeric" placeholder="Weight">
+                        <input type="number" class="set-reps" inputmode="numeric" placeholder="Reps">
+                        <button type="button" class="btn-set-del" onclick="removeSetRow(this)">✕</button>
                     </div>
                 </div>
-                <button type="button" class="btn-primary" onclick="saveLifting()">Save Lifting Set</button>
-            </div>
-        </div>
+                <button type="button" class="btn-secondary" style="margin-top:0; margin-bottom:15px;" onclick="addSetRow()">➕ Add Next Set</button>
 
-        <div class="card">
-            <h2>Workout History Log</h2>
-            <div id="history">No history saved yet.</div>
-            <button type="button" class="btn-secondary" style="margin-top:15px;" onclick="exportToCSV()">Export History Backup (CSV)</button>
-        </div>
-    </div>
-
+                <!-- Edit 3: Optional Comment Field -->
+                <div class="form-group">
+                    <label>Comments / Notes</label>
     <script>
+        document.getElementById('workoutDate').valueAsDate = new Date();
 
-
-        // Load custom user exercise history into datalist on launch
         function loadCustomExercises() {
             const savedEx = JSON.parse(localStorage.getItem('customExercises')) || [];
             const dl = document.getElementById('exerciseOptions');
             savedEx.forEach(ex => {
-                // Prevent duplicate options from rendering
                 if (!Array.from(dl.options).some(opt => opt.value.toLowerCase() === ex.toLowerCase())) {
-                    const opt = document.createElement('option');
-                    opt.value = ex;
-                    dl.appendChild(opt);
+                    const opt = document.createElement('option'); opt.value = ex; dl.appendChild(opt);
                 }
             });
         }
 
-        function switchTab(tabId) {
+        function switchTab(e, tabId) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            e.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+        }
+
+        function addSetRow() {
+            const container = document.getElementById('setsContainer');
+            const currentSets = container.children.length;
+            const newRow = document.createElement('div');
+            newRow.className = 'set-row';
+            newRow.innerHTML = `
+                <div class="set-num">${currentSets + 1}</div>
+                <input type="number" class="set-weight" inputmode="numeric" placeholder="Weight">
+                <input type="number" class="set-reps" inputmode="numeric" placeholder="Reps">
+                <button type="button" class="btn-set-del" onclick="removeSetRow(this)">✕</button>
+            `;
+            container.appendChild(newRow);
+        }
+
+        function removeSetRow(btn) {
+            const container = document.getElementById('setsContainer');
+            if(container.children.length > 1) {
+                btn.parentElement.remove();
+                Array.from(container.children).forEach((row, index) => {
+                    row.querySelector('.set-num').textContent = index + 1;
+                });
+            }
         }
 
         function calculateSplit(wattsId, splitId) {
@@ -213,30 +221,33 @@
         function getSelectedDate() {
             const dInput = document.getElementById('workoutDate').value;
             if(!dInput) return new Date().toLocaleDateString();
-            const parts = dInput.split('-');
-            return `${parts[1]}/${parts[2]}/${parts[0]}`; 
+            const p = dInput.split('-'); return `${p[1]}/${p[2]}/${p[0]}`; 
         }
 
         function saveRowing() {
             const data = {
                 id: Date.now(), type: 'Rowing', date: getSelectedDate(),
+                time: document.getElementById('rowTime').value || '00:00',
+                meters: document.getElementById('rowMeters').value || 0,
                 kcal: document.getElementById('kcal').value || 0, res: document.getElementById('res').value || 10,
                 wAvg: document.getElementById('wAvg').value || 0, wMax: document.getElementById('wMax').value || 0,
                 spmAvg: document.getElementById('spmAvg').value || 0, spmMax: document.getElementById('spmMax').value || 0,
                 mAvg: document.getElementById('mAvg').value || '0:00.0', mMax: document.getElementById('mMax').value || '0:00.0',
-                dlAvg: document.getElementById('dlAvg').value || '0.00', dlMax: document.getElementById('dlMax').value || '0.00'
+                dlAvg: document.getElementById('dlAvg').value || '0.00', dlMax: document.getElementById('dlMax').value || '0.00',
+                notes: document.getElementById('rowNotes').value.trim()
             };
             let log = JSON.parse(localStorage.getItem('gymMasterHistory')) || [];
-            log.unshift(data);
-            localStorage.setItem('gymMasterHistory', JSON.stringify(log));
+            log.unshift(data); localStorage.setItem('gymMasterHistory', JSON.stringify(log));
             displayHistory();
             
             const currentRes = document.getElementById('res').value;
-            document.getElementById('kcal').value = ''; document.getElementById('wAvg').value = '';
-            document.getElementById('wMax').value = ''; document.getElementById('spmAvg').value = '';
-            document.getElementById('spmMax').value = ''; document.getElementById('mAvg').value = '';
-            document.getElementById('mMax').value = ''; document.getElementById('dlAvg').value = '';
-            document.getElementById('dlMax').value = ''; document.getElementById('res').value = currentRes;
+            document.getElementById('rowTime').value=''; document.getElementById('rowMeters').value='';
+            document.getElementById('kcal').value=''; document.getElementById('wAvg').value='';
+            document.getElementById('wMax').value=''; document.getElementById('spmAvg').value='';
+            document.getElementById('spmMax').value=''; document.getElementById('mAvg').value='';
+            document.getElementById('mMax').value=''; document.getElementById('dlAvg').value='';
+            document.getElementById('dlMax').value=''; document.getElementById('rowNotes').value='';
+            document.getElementById('res').value = currentRes;
             alert('Rowing stats saved!');
         }
 
@@ -244,30 +255,41 @@
             const exName = document.getElementById('exerciseName').value.trim();
             if(!exName) { alert('Please enter an exercise name.'); return; }
             
-            // Save newly discovered custom exercises to autocomplete bank
+            const setRows = document.querySelectorAll('.set-row');
+            let setsArray = [];
+            setRows.forEach(row => {
+                const w = row.querySelector('.set-weight').value || 0;
+                const r = row.querySelector('.set-reps').value || 0;
+                setsArray.push({ weight: w, reps: r });
+            });
+
             let savedEx = JSON.parse(localStorage.getItem('customExercises')) || [];
             if(!savedEx.some(e => e.toLowerCase() === exName.toLowerCase())) {
-                savedEx.push(exName);
-                localStorage.setItem('customExercises', JSON.stringify(savedEx));
+                savedEx.push(exName); localStorage.setItem('customExercises', JSON.stringify(savedEx));
                 loadCustomExercises();
             }
 
             const data = {
                 id: Date.now(), type: 'Lifting', date: getSelectedDate(),
                 muscle: document.getElementById('muscleGroup').value,
-                exercise: exName,
-                weight: document.getElementById('liftWeight').value || 0,
-                reps: document.getElementById('liftReps').value || 0
+                exercise: exName, sets: setsArray,
+                notes: document.getElementById('liftNotes').value.trim()
             };
             let log = JSON.parse(localStorage.getItem('gymMasterHistory')) || [];
-            log.unshift(data);
-            localStorage.setItem('gymMasterHistory', JSON.stringify(log));
+            log.unshift(data); localStorage.setItem('gymMasterHistory', JSON.stringify(log));
             displayHistory();
             
             document.getElementById('exerciseName').value = '';
-            document.getElementById('liftWeight').value = '';
-            document.getElementById('liftReps').value = '';
-            alert('Lifting set saved!');
+            document.getElementById('liftNotes').value = '';
+            const container = document.getElementById('setsContainer');
+            container.innerHTML = `
+                <div class="set-row">
+                    <div class="set-num">1</div>
+                    <input type="number" class="set-weight" inputmode="numeric" placeholder="Weight">
+                    <input type="number" class="set-reps" inputmode="numeric" placeholder="Reps">
+                    <button type="button" class="btn-set-del" onclick="removeSetRow(this)">✕</button>
+                </div>`;
+            alert('Exercise logs saved successfully!');
         }
 
         function deleteEntry(id) {
@@ -285,50 +307,51 @@
             if (log.length === 0) { container.innerHTML = "No history saved yet."; return; }
             
             container.innerHTML = log.map(h => {
+                const noteHtml = h.notes ? `<span class="comment-text">📝 Note: ${h.notes}</span>` : '';
                 if(h.type === 'Rowing') {
                     return `
-                        <div class="log-entry" style="border-left-color: #0a84ff;">
+                        <div class="log-entry" style="border-left-color:#0a84ff;">
                             <button class="delete-btn" onclick="deleteEntry(${h.id})">✕</button>
                             <span><b>${h.date}</b> — Rowing Session</span>
-                            Kcal: <b>${h.kcal}</b> | Res: <b>${h.res}</b><br>
+                            Time: <b>${h.time}</b> | Dist: <b>${h.meters}m</b> | Kcal: <b>${h.kcal}</b> | Res: <b>${h.res}</b><br>
                             Watts: ${h.wAvg}a / ${h.wMax}m | SPM: ${h.spmAvg}a / ${h.spmMax}m<br>
                             500m: ${h.mAvg}a / ${h.mMax}m | Drive: ${h.dlAvg}a / ${h.dlMax}m
+                            ${noteHtml}
                         </div>`;
                 } else {
+                    const setsHtml = h.sets.map((s, i) => `S${i+1}: <b>${s.weight}</b>x<b>${s.reps}</b>`).join(' | ');
                     return `
-                        <div class="log-entry" style="border-left-color: #30d158;">
+                        <div class="log-entry" style="border-left-color:#30d158;">
                             <button class="delete-btn" onclick="deleteEntry(${h.id})">✕</button>
                             <span><b>${h.date}</b> — ${h.muscle} Strength</span>
-                            <b>${h.exercise}</b>: ${h.weight} lbs x ${h.reps} reps
+                            <b>${h.exercise}</b><br>${setsHtml}
+                            ${noteHtml}
                         </div>`;
                 }
             }).join('');
         }
 
-        function exportToCSV() {
+                function exportToCSV() {
             let log = JSON.parse(localStorage.getItem('gymMasterHistory')) || [];
             if (log.length === 0) { alert("No logs to export."); return; }
-            let csv = "data:text/csv;charset=utf-8,Date,Type,Details\n";
+            let csv = "data:text/csv;charset=utf-8,Date,Type,Workout Details,Comments/Notes\n";
             log.forEach(h => {
+                const cleanNote = (h.notes || '').replace(/"/g, '""');
                 if(h.type === 'Rowing') {
-                    csv += `"${h.date}","Rowing","Kcal: ${h.kcal} | Res: ${h.res} | Watts Avg: ${h.wAvg} Max: ${h.wMax} | SPM Avg: ${h.spmAvg} Max: ${h.spmMax} | 500m Avg: ${h.mAvg} Max: ${h.mMax}"\n`;
+                    csv += `"${h.date}","Rowing","Time: ${h.time} | Meters: ${h.meters} | Kcal: ${h.kcal} | Res: ${h.res} | Watts: ${h.wAvg}a/${h.wMax}m | SPM: ${h.spmAvg}a/${h.spmMax}m | 500m: ${h.mAvg}a/${h.mMax}m","${cleanNote}"\n`;
                 } else {
-                    csv += `"${h.date}","Lifting","[${h.muscle}] ${h.exercise}: ${h.weight}lbs x ${h.reps}reps"\n`;
+                    const setsDesc = h.sets.map((s,i) => `Set ${i+1}: ${s.weight}x${s.reps}`).join('; ');
+                    csv += `"${h.date}","Lifting","[${h.muscle}] ${h.exercise} -> ${setsDesc}","${cleanNote}"\n`;
                 }
             });
             const encodedUri = encodeURI(csv);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", "gym_master_history.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
-        window.onload = function() {
-            displayHistory();
-            loadCustomExercises();
-        };
+        window.onload = function() { displayHistory(); loadCustomExercises(); };
     </script>
 </body>
 </html>
