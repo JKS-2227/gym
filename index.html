@@ -164,7 +164,22 @@
                 <!-- Edit 3: Optional Comment Field -->
                 <div class="form-group">
                     <label>Comments / Notes</label>
+                    <textarea id="liftNotes" placeholder="Optional notes..."></textarea>
+                </div>
+                
+                <button type="button" class="btn-primary" onclick="saveLifting()">Save Entire Exercise</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Workout History Log</h2>
+            <div id="history">No history saved yet.</div>
+            <button type="button" class="btn-secondary" style="margin-top:15px;" onclick="exportToCSV()">Export History Backup (CSV)</button>
+        </div>
+    </div>
+
     <script>
+
         document.getElementById('workoutDate').valueAsDate = new Date();
 
         function loadCustomExercises() {
@@ -348,10 +363,11 @@
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", "gym_master_history.csv");
-            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+                        document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         window.onload = function() { displayHistory(); loadCustomExercises(); };
+
     </script>
 </body>
 </html>
